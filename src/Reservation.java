@@ -1,4 +1,3 @@
-import java.security.Provider;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,8 +14,17 @@ public class Reservation {
     private double totalPrice;
     private List<Service> services;
 
-    public Reservation(){
-
+    public Reservation(String reservationId, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate) throws InvalidDateRangeException {
+        this.reservationId = reservationId;
+        this.guest = guest;
+        this.room = room;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.status = ReservationStatus.PENDING;
+        this.createdAt = LocalDateTime.now();
+        this.services = new ArrayList<>();
+        validateDates(checkInDate, checkOutDate);
+        calculateTotalPrice();
     }
 
     public String getReservationId(){
@@ -59,8 +67,18 @@ public class Reservation {
         return this.services;
     }
 
-    public void addService(List<Service> services){
-        this.services = services;
+    public void addService(Service service){
+        if(this.services == null){
+            this.services = new ArrayList<>();
+        }
+        this.services.add(service);
+    }
+
+    private boolean validateDates(LocalDate checkInDate, LocalDate checkOutDate) throws InvalidDateRangeException {
+        if(checkInDate == null || checkOutDate == null || checkInDate.isAfter(checkOutDate)){
+            throw new InvalidDateRangeException("Check-Out date must be after the Check-In date!");
+        }
+        return true;
     }
 
     public void confirmReservation(){
@@ -84,8 +102,8 @@ public class Reservation {
     }
 
     private void calculateTotalPrice(){
-        int nights = this.checkOutDate.getDayOfMonth() - this.checkInDate.getDayOfMonth();
-        int guestCount = getGues;
-        this.totalPrice = room.calculatePrice(checkInDate, guestCount) * nights;
+        long nights = java.time.temporal.ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+        double pricePerNight = room.calculatePrice(checkInDate, 1);
+        this.totalPrice = pricePerNight * nights;
     }
 }
