@@ -22,7 +22,8 @@ public class Guest extends User{
     }
 
     public void increaseTotalStays(){
-        this.totalStays++;}
+        this.totalStays++;
+    }
 
     public int getTotalStays(){
         return this.totalStays;
