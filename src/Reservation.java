@@ -18,20 +18,18 @@ public class Reservation {
     public Reservation(String reservationId, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuests) throws InvalidDateRangeException {
         validateDates(checkInDate, checkOutDate);
 
+        setReservationId(reservationId);
+        setGuest(guest);
+        setRoom(room);
+
         if (numberOfGuests <= 0){
             throw new IllegalArgumentException("Number of guests must be greater than zero!");
         }
-
-        if(room.getCapacity() < numberOfGuests){
+        if (room.getCapacity() < numberOfGuests){
             throw new IllegalArgumentException("There is not enough space for these number of guests in this room!");
         }
-
-        this.reservationId = reservationId;
-        this.guest = guest;
-        this.room = room;
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
         this.numberOfGuests = numberOfGuests;
+
         this.status = ReservationStatus.PENDING;
         this.createdAt = LocalDateTime.now();
         this.services = new ArrayList<>();
@@ -44,12 +42,33 @@ public class Reservation {
         return this.reservationId;
     }
 
+    public void setReservationId(String reservationId){
+        if(reservationId == null || reservationId.trim().isEmpty()){
+            throw new IllegalArgumentException("Reservation ID cannot be empty!");
+        }
+        this.reservationId = reservationId;
+    }
+
     public Guest getGuest(){
         return this.guest;
     }
 
+    public void setGuest(Guest guest){
+        if(guest == null){
+            throw new IllegalArgumentException("Guest cannot be null!");
+        }
+        this.guest = guest;
+    }
+
     public Room getRoom(){
         return this.room;
+    }
+
+    public void setRoom(Room room){
+        if(room == null){
+            throw new IllegalArgumentException("Room cannot be null!");
+        }
+        this.room = room;
     }
 
     public LocalDate getCheckInDate(){

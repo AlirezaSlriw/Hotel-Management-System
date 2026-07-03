@@ -14,7 +14,7 @@ public abstract class User extends Person{
         return this.username;
     }
 
-    private void setUsername(String username){
+    public void setUsername(String username){
         if(username == null || username.trim().isEmpty()){
             throw new IllegalArgumentException("Username cannot be empty!");
         }

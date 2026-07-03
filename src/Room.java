@@ -10,7 +10,7 @@ public abstract class Room {
     private int capacity;
 
     public Room(String roomNumber, RoomType type, RoomStatus status, double basePrice, int floorNumber, int capacity){
-        this.roomNumber = roomNumber;
+        setRoomNumber(roomNumber);
         this.type = type;
         setStatus(status);
         setBasePrice(basePrice);

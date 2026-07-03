@@ -34,6 +34,9 @@ public class Guest extends User{
     }
 
     public void addReservation(Reservation reservation){
+        if(reservation == null){
+            throw new IllegalArgumentException("Reservation cannot be null!");
+        }
         this.reservationHistory.add(reservation);
     }
 
