@@ -1,4 +1,3 @@
-import java.security.PublicKey;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,21 +15,29 @@ public class Reservation {
     private List<Service> services;
     private int numberOfGuests;
 
-    public Reservation(String reservationId, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate) throws InvalidDateRangeException {
+    public Reservation(String reservationId, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuests) throws InvalidDateRangeException {
+        validateDates(checkInDate, checkOutDate);
+
+        if (numberOfGuests <= 0){
+            throw new IllegalArgumentException("Number of guests must be greater than zero!");
+        }
+
+        if(room.getCapacity() < numberOfGuests){
+            throw new IllegalArgumentException("There is not enough space for these number of guests in this room!");
+        }
+
         this.reservationId = reservationId;
         this.guest = guest;
         this.room = room;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
+        this.numberOfGuests = numberOfGuests;
         this.status = ReservationStatus.PENDING;
         this.createdAt = LocalDateTime.now();
         this.services = new ArrayList<>();
-        if (numberOfGuests <= 0 || numberOfGuests > room.getCapacity()) {
-            throw new IllegalArgumentException("number of guests doesn't fit in this room!");
-        }
-        this.numberOfGuests = numberOfGuests;
-        validateDates(checkInDate, checkOutDate);
+
         calculateTotalPrice();
+        this.room.setStatus(RoomStatus.RESERVED);
     }
 
     public String getReservationId(){
@@ -105,7 +112,7 @@ public class Reservation {
             this.room.setStatus(RoomStatus.AVAILABLE);
             this.status = ReservationStatus.COMPLETED;
             this.guest.increaseTotalStays();
-            this.guest.checkMembershipUpgrade;
+            this.guest.checkMembershipUpgrade();
         }
     }
 
@@ -121,7 +128,7 @@ public class Reservation {
         double pricePerNight = room.calculatePrice(checkInDate, numberOfGuests);
 
         if(daysTillCheckIn < 1){
-            return pricePerNight;
+            return 1.0 * pricePerNight;
         }
         else if(daysTillCheckIn <= 3){
             return 0.5 * pricePerNight;
@@ -132,7 +139,7 @@ public class Reservation {
     }
 
     private void calculateTotalPrice(){
-        long nights = checkInDate.toEpochDay() - LocalDate.now().toEpochDay();
+        long nights = checkOutDate.toEpochDay() - checkInDate.toEpochDay();
         double price = 0;
 
         for(int i = 0; i < nights; i++){
@@ -141,9 +148,5 @@ public class Reservation {
         }
 
         this.totalPrice = price;
-    }
-
-    private void calculateCancellationPenalty(){
-
     }
 }
