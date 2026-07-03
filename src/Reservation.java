@@ -87,11 +87,10 @@ public class Reservation {
         this.services.add(service);
     }
 
-    private boolean validateDates(LocalDate checkInDate, LocalDate checkOutDate) throws InvalidDateRangeException {
+    private void validateDates(LocalDate checkInDate, LocalDate checkOutDate) throws InvalidDateRangeException {
         if(checkInDate == null || checkOutDate == null || checkInDate.isAfter(checkOutDate)){
             throw new InvalidDateRangeException("Check-Out date must be after the Check-In date!");
         }
-        return true;
     }
 
     public void confirmReservation(){

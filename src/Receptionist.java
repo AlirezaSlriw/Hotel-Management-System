@@ -13,6 +13,9 @@ public class Receptionist extends Staff{
     }
 
     public void setShiftType(String shiftType){
+        if(shiftType == null || shiftType.trim().isEmpty()){
+            throw new IllegalArgumentException("Shift type cannot be empty!");
+        }
         this.shiftType = shiftType;
     }
 }

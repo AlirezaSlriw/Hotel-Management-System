@@ -13,6 +13,9 @@ public class HotelManager extends Staff{
     }
 
     public void setDepartmentName(String departmentName){
+        if(departmentName == null || departmentName.trim().isEmpty()){
+            throw new IllegalArgumentException("Department name cannot be empty!");
+        }
         this.departmentName = departmentName;
     }
 }
