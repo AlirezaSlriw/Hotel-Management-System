@@ -4,7 +4,7 @@ import java.util.List;
 public class Guest extends User{
     private MembershipLevel membershipLevel;
     private int totalStays;
-    private List<Object> reservationHistory;
+    private List<Reservation> reservationHistory;
 
     public Guest(String fullName, String nationalId, String phone, String username, String password){
         super(fullName, nationalId, phone, username, password, UserRole.GUEST);
@@ -29,7 +29,26 @@ public class Guest extends User{
         return this.totalStays;
     }
 
-    public List<Object> getReservationHistory(){
+    public List<Reservation> getReservationHistory(){
         return this.reservationHistory;
+    }
+
+    public void addReservation(Reservation reservation){
+        this.reservationHistory.add(reservation);
+    }
+
+    public void checkMembershipUpgrade(){
+        if(totalStays >= 30){
+            this.membershipLevel = MembershipLevel.PLATINUM;
+        }
+        else if(totalStays >= 15){
+            this.membershipLevel = MembershipLevel.GOLD;
+        }
+        else if(totalStays >= 5){
+            this.membershipLevel = MembershipLevel.SILVER;
+        }
+        else{
+            this.membershipLevel = MembershipLevel.BRONZE;
+        }
     }
 }

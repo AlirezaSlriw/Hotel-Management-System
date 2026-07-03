@@ -1,3 +1,4 @@
+import java.security.PublicKey;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class Reservation {
     private LocalDateTime createdAt;
     private double totalPrice;
     private List<Service> services;
+    private int numberOfGuests;
 
     public Reservation(String reservationId, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate) throws InvalidDateRangeException {
         this.reservationId = reservationId;
@@ -23,6 +25,10 @@ public class Reservation {
         this.status = ReservationStatus.PENDING;
         this.createdAt = LocalDateTime.now();
         this.services = new ArrayList<>();
+        if (numberOfGuests <= 0 || numberOfGuests > room.getCapacity()) {
+            throw new IllegalArgumentException("number of guests doesn't fit in this room!");
+        }
+        this.numberOfGuests = numberOfGuests;
         validateDates(checkInDate, checkOutDate);
         calculateTotalPrice();
     }
@@ -98,12 +104,46 @@ public class Reservation {
         if(this.status == ReservationStatus.ACTIVE){
             this.room.setStatus(RoomStatus.AVAILABLE);
             this.status = ReservationStatus.COMPLETED;
+            this.guest.increaseTotalStays();
+            this.guest.checkMembershipUpgrade;
+        }
+    }
+
+    public void cancelReservation(){
+        if(this.status == ReservationStatus.PENDING || this.status == ReservationStatus.CONFIRMED){
+            this.status = ReservationStatus.CANCELLED;
+            this.room.setStatus(RoomStatus.AVAILABLE);
+        }
+    }
+
+    public double calculatePenalty(){
+        long daysTillCheckIn = checkInDate.toEpochDay() - LocalDate.now().toEpochDay();
+        double pricePerNight = room.calculatePrice(checkInDate, numberOfGuests);
+
+        if(daysTillCheckIn < 1){
+            return pricePerNight;
+        }
+        else if(daysTillCheckIn <= 3){
+            return 0.5 * pricePerNight;
+        }
+        else{
+            return 0.0;
         }
     }
 
     private void calculateTotalPrice(){
-        long nights = java.time.temporal.ChronoUnit.DAYS.between(checkInDate, checkOutDate);
-        double pricePerNight = room.calculatePrice(checkInDate, 1);
-        this.totalPrice = pricePerNight * nights;
+        long nights = checkInDate.toEpochDay() - LocalDate.now().toEpochDay();
+        double price = 0;
+
+        for(int i = 0; i < nights; i++){
+            LocalDate currentDate = checkInDate.plusDays(i);
+            price += room.calculatePrice(currentDate, numberOfGuests);
+        }
+
+        this.totalPrice = price;
+    }
+
+    private void calculateCancellationPenalty(){
+
     }
 }
