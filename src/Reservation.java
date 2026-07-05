@@ -17,6 +17,8 @@ public class Reservation {
 
     public Reservation(String reservationId, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuests) throws InvalidDateRangeException {
         validateDates(checkInDate, checkOutDate);
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
 
         setReservationId(reservationId);
         setGuest(guest);
@@ -107,7 +109,7 @@ public class Reservation {
     }
 
     private void validateDates(LocalDate checkInDate, LocalDate checkOutDate) throws InvalidDateRangeException {
-        if(checkInDate == null || checkOutDate == null || checkInDate.isAfter(checkOutDate)){
+        if(checkInDate == null || checkOutDate == null || !checkInDate.isBefore(checkOutDate)){
             throw new InvalidDateRangeException("Check-Out date must be after the Check-In date!");
         }
     }
