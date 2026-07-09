@@ -58,11 +58,8 @@ public class Main {
     }
 
     private static void clearScreen(){
-        System.out.print("\033[H\033[2J");
+        System.out.print("\033[H\033[2J\033[3J");
         System.out.flush();
-        for (int i = 0; i < 25; i++){
-            System.out.println();
-        }
     }
 
     private static void showLoadingBar(){
@@ -256,7 +253,10 @@ public class Main {
         }
         System.out.print("\nRoom Number to change (Enter to skip) > ");
         String roomNum = sc.nextLine().trim();
-        if (roomNum.isEmpty()) return;
+        if (roomNum.isEmpty()){
+            clearScreen();
+            return;
+        }
 
         for (Room r : HotelService.Rooms){
             if (r.getRoomNumber().equals(roomNum)){
@@ -287,7 +287,10 @@ public class Main {
         System.out.printf("4. PENTHOUSE (current: %.2f)\n", PentHouse.getStaticTypeMultiplier());
         System.out.print("Select type to change (Enter to skip) > ");
         String choice = sc.nextLine().trim();
-        if (choice.isEmpty()) return;
+        if (choice.isEmpty()){
+            clearScreen();
+            return;
+        }
 
         try {
             System.out.print("New Multiplier > ");
@@ -317,7 +320,10 @@ public class Main {
         }
         System.out.print("Select season to change (OFF/NORMAL/PEAK, Enter to skip) > ");
         String name = sc.nextLine().trim().toUpperCase();
-        if (name.isEmpty()) return;
+        if (name.isEmpty()){
+            clearScreen();
+            return;
+        }
 
         try {
             Season season = Season.valueOf(name);
@@ -361,7 +367,10 @@ public class Main {
         }
         System.out.print("Select level to change (BRONZE/SILVER/GOLD/PLATINUM, Enter to skip) > ");
         String name = sc.nextLine().trim().toUpperCase();
-        if (name.isEmpty()) return;
+        if (name.isEmpty()){
+            clearScreen();
+            return;
+        }
 
         try {
             MembershipLevel level = MembershipLevel.valueOf(name);

@@ -1,0 +1,156 @@
+
+
+Version:	3.50
+CmdLine:	C:\Users\Alireza\IdeaProjects\ProjectZero\HotelManagementSystem.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\Alireza\IdeaProjects\ProjectZero\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	1.017.000
+Java max ver:	
+Substitute:	JAVA_HOME = 
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\ProxyBridge;C:\Users\Alireza\AppData\Local\Programs\Python\Launcher\;C:\Users\Alireza\AppData\Local\Microsoft\WindowsApps;I:\PyCharm 2025.2.1.1\bin;C:\Users\Alireza\AppData\Local\Programs\Microsoft VS Code\bin;H:\mingw-w64\bin;C:\Users\Alireza\AppData\Local\Programs\Ollama;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\python.exe;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\Scripts;I:\IntelliJ IDEA 2025.3.3\bin;C:\Users\Alireza\AppData\Local\Microsoft\WinGet\Packages\AlDanial.Cloc_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Program Files\Java\jre-1.8\bin
+JRE paths:	;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\ProxyBridge;C:\Users\Alireza\AppData\Local\Programs\Python\Launcher\;C:\Users\Alireza\AppData\Local\Microsoft\WindowsApps;I:\PyCharm 2025.2.1.1\bin;C:\Users\Alireza\AppData\Local\Programs\Microsoft VS Code\bin;H:\mingw-w64\bin;C:\Users\Alireza\AppData\Local\Programs\Ollama;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\python.exe;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\Scripts;I:\IntelliJ IDEA 2025.3.3\bin;C:\Users\Alireza\AppData\Local\Microsoft\WinGet\Packages\AlDanial.Cloc_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Program Files\Java\jre-1.8\bin
+Check launcher:	C:\Program Files\Common Files\Oracle\Java\javapath\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files (x86)\Common Files\Oracle\Java\javapath\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\system32\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\System32\Wbem\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\System32\WindowsPowerShell\v1.0\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\System32\OpenSSH\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\dotnet\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Git\cmd\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\ProxyBridge\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Python\Launcher\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Microsoft\WindowsApps\bin\javaw.exe (not found)
+Check launcher:	I:\PyCharm 2025.2.1.1\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Microsoft VS Code\bin\javaw.exe (not found)
+Check launcher:	H:\mingw-w64\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Ollama\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Python\Python314\python.exe\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Python\Python314\Scripts\bin\javaw.exe (not found)
+Check launcher:	I:\IntelliJ IDEA 2025.3.3\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Microsoft\WinGet\Packages\AlDanial.Cloc_Microsoft.Winget.Source_8wekyb3d8bbwe\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Java\jre-1.8\bin\javaw.exe (OK)
+Version string: 1.008.000_401 / 64-Bit (Ignore)
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Version string: 1.008.000 / 64-Bit (Ignore)
+Ignore:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_401
+Version string: 1.008.000_401 / 64-Bit (Ignore)
+Ignore:		1.008.000_401
+32-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+32-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+32-bit search:	SOFTWARE\JavaSoft\JRE...
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\25.0.2
+Version string: 1.025.000_002 / 64-Bit (OK)
+Check launcher:	C:\Program Files\Java\jdk-25.0.2\bin\javaw.exe (OK)
+Match:		1.025.000_002
+Runtime used:	1.025.000_002 (64-bit)
+Launcher:	C:\Program Files\Java\jdk-25.0.2\bin\javaw.exe
+Launcher args:	-jar "C:\Users\Alireza\IdeaProjects\ProjectZero\HotelManagementSystem.exe"
+Args length:	74/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\Alireza\IdeaProjects\ProjectZero\HotelManagementSystem.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\Alireza\IdeaProjects\ProjectZero\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	1.017.000
+Java max ver:	
+Substitute:	JAVA_HOME = 
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\ProxyBridge;C:\Users\Alireza\AppData\Local\Programs\Python\Launcher\;C:\Users\Alireza\AppData\Local\Microsoft\WindowsApps;I:\PyCharm 2025.2.1.1\bin;C:\Users\Alireza\AppData\Local\Programs\Microsoft VS Code\bin;H:\mingw-w64\bin;C:\Users\Alireza\AppData\Local\Programs\Ollama;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\python.exe;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\Scripts;I:\IntelliJ IDEA 2025.3.3\bin;C:\Users\Alireza\AppData\Local\Microsoft\WinGet\Packages\AlDanial.Cloc_Microsoft.Winget.Source_8wekyb3d8bbwe;;C:\Program Files\Java\jre-1.8\bin
+JRE paths:	;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\ProxyBridge;C:\Users\Alireza\AppData\Local\Programs\Python\Launcher\;C:\Users\Alireza\AppData\Local\Microsoft\WindowsApps;I:\PyCharm 2025.2.1.1\bin;C:\Users\Alireza\AppData\Local\Programs\Microsoft VS Code\bin;H:\mingw-w64\bin;C:\Users\Alireza\AppData\Local\Programs\Ollama;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\python.exe;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\Scripts;I:\IntelliJ IDEA 2025.3.3\bin;C:\Users\Alireza\AppData\Local\Microsoft\WinGet\Packages\AlDanial.Cloc_Microsoft.Winget.Source_8wekyb3d8bbwe;;C:\Program Files\Java\jre-1.8\bin
+Check launcher:	C:\Program Files\Common Files\Oracle\Java\javapath\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files (x86)\Common Files\Oracle\Java\javapath\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\system32\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\System32\Wbem\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\System32\WindowsPowerShell\v1.0\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\System32\OpenSSH\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\dotnet\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Git\cmd\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\ProxyBridge\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Python\Launcher\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Microsoft\WindowsApps\bin\javaw.exe (not found)
+Check launcher:	I:\PyCharm 2025.2.1.1\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Microsoft VS Code\bin\javaw.exe (not found)
+Check launcher:	H:\mingw-w64\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Ollama\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Python\Python314\python.exe\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Python\Python314\Scripts\bin\javaw.exe (not found)
+Check launcher:	I:\IntelliJ IDEA 2025.3.3\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Microsoft\WinGet\Packages\AlDanial.Cloc_Microsoft.Winget.Source_8wekyb3d8bbwe\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Java\jre-1.8\bin\javaw.exe (OK)
+Version string: 1.008.000_401 / 64-Bit (Ignore)
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Version string: 1.008.000 / 64-Bit (Ignore)
+Ignore:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_401
+Version string: 1.008.000_401 / 64-Bit (Ignore)
+Ignore:		1.008.000_401
+32-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+32-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+32-bit search:	SOFTWARE\JavaSoft\JRE...
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\25.0.2
+Version string: 1.025.000_002 / 64-Bit (OK)
+Check launcher:	C:\Program Files\Java\jdk-25.0.2\bin\javaw.exe (OK)
+Match:		1.025.000_002
+Runtime used:	1.025.000_002 (64-bit)
+Launcher:	C:\Program Files\Java\jdk-25.0.2\bin\javaw.exe
+Launcher args:	-jar "C:\Users\Alireza\IdeaProjects\ProjectZero\HotelManagementSystem.exe"
+Args length:	74/32768 chars
+Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\Alireza\IdeaProjects\ProjectZero\HotelManagementSystem.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\Alireza\IdeaProjects\ProjectZero\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+Substitute:	JAVA_HOME = 
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\ProxyBridge;C:\Users\Alireza\AppData\Local\Programs\Python\Launcher\;C:\Users\Alireza\AppData\Local\Microsoft\WindowsApps;I:\PyCharm 2025.2.1.1\bin;C:\Users\Alireza\AppData\Local\Programs\Microsoft VS Code\bin;H:\mingw-w64\bin;C:\Users\Alireza\AppData\Local\Programs\Ollama;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\python.exe;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\Scripts;I:\IntelliJ IDEA 2025.3.3\bin;C:\Users\Alireza\AppData\Local\Microsoft\WinGet\Packages\AlDanial.Cloc_Microsoft.Winget.Source_8wekyb3d8bbwe;;C:\Program Files\Java\jre-1.8\bin
+JRE paths:	;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\ProxyBridge;C:\Users\Alireza\AppData\Local\Programs\Python\Launcher\;C:\Users\Alireza\AppData\Local\Microsoft\WindowsApps;I:\PyCharm 2025.2.1.1\bin;C:\Users\Alireza\AppData\Local\Programs\Microsoft VS Code\bin;H:\mingw-w64\bin;C:\Users\Alireza\AppData\Local\Programs\Ollama;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\python.exe;C:\Users\Alireza\AppData\Local\Programs\Python\Python314\Scripts;I:\IntelliJ IDEA 2025.3.3\bin;C:\Users\Alireza\AppData\Local\Microsoft\WinGet\Packages\AlDanial.Cloc_Microsoft.Winget.Source_8wekyb3d8bbwe;;C:\Program Files\Java\jre-1.8\bin
+Check launcher:	C:\Program Files\Common Files\Oracle\Java\javapath\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files (x86)\Common Files\Oracle\Java\javapath\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\system32\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\System32\Wbem\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\System32\WindowsPowerShell\v1.0\bin\javaw.exe (not found)
+Check launcher:	C:\Windows\System32\OpenSSH\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\dotnet\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Git\cmd\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\ProxyBridge\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Python\Launcher\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Microsoft\WindowsApps\bin\javaw.exe (not found)
+Check launcher:	I:\PyCharm 2025.2.1.1\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Microsoft VS Code\bin\javaw.exe (not found)
+Check launcher:	H:\mingw-w64\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Ollama\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Python\Python314\python.exe\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Programs\Python\Python314\Scripts\bin\javaw.exe (not found)
+Check launcher:	I:\IntelliJ IDEA 2025.3.3\bin\javaw.exe (not found)
+Check launcher:	C:\Users\Alireza\AppData\Local\Microsoft\WinGet\Packages\AlDanial.Cloc_Microsoft.Winget.Source_8wekyb3d8bbwe\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Java\jre-1.8\bin\javaw.exe (OK)
+Version string: 1.008.000_401 / 64-Bit (OK)
+Launcher:	C:\Program Files\Java\jre-1.8\bin\javaw.exe
+Launcher args:	-jar "C:\Users\Alireza\IdeaProjects\ProjectZero\HotelManagementSystem.exe"
+Args length:	74/32768 chars
+Exit code:	0

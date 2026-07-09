@@ -4,6 +4,7 @@ out/
 !**/src/test/**/out/
 .kotlin
 
+
 .idea/
 *.iml
 target/
@@ -32,3 +33,11 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+**/META-INF/
+
+*.exe
+
+launch4j-config.xml
+
+launch4j.txt
