@@ -8,6 +8,9 @@ public abstract class Room {
     private double basePrice;
     private int floorNumber;
     private int capacity;
+    private static double singleGuestMultiplier = 1.0;
+    private static double doubleGuestMultiplier = 1.2;
+    private static double extraGuestMultiplier = 1.4;
 
     public Room(String roomNumber, RoomType type, RoomStatus status, double basePrice, int floorNumber, int capacity){
         setRoomNumber(roomNumber);
@@ -93,12 +96,20 @@ public abstract class Room {
         return 1.0;
     }
 
-    protected double getGuestMultiplier(int guestNumbers){
-        double percentageIncrease = ((guestNumbers - 1) * 2)/10.0;
-        return (1.0 + percentageIncrease);
+    public static void setGuestMultipliers(double single, double doubleGuest, double extra){
+        if(single <= 0 || doubleGuest <= 0 || extra <= 0){
+            throw new IllegalArgumentException("Multipliers must be positive!");
+        }
+        singleGuestMultiplier = single;
+        doubleGuestMultiplier = doubleGuest;
+        extraGuestMultiplier = extra;
     }
 
-
+    protected double getGuestMultiplier(int guestNumbers){
+        if (guestNumbers <= 1) return singleGuestMultiplier;
+        if (guestNumbers == 2) return doubleGuestMultiplier;
+        return extraGuestMultiplier;
+    }
 
     public double calculatePrice(LocalDate date, int guestNumbers){
         return getBasePrice() * getTypeMultiplier() * getSeasonMultiplier(date) *

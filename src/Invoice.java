@@ -4,14 +4,21 @@ public class Invoice implements Billable, Exportable{
     private double totalAmount;
     private double amountPaid;
     private boolean paymentCompleted;
+    private static double municipalTaxRate = 0.01;
+    private static double vatRate = 0.09;
     private static int idCounter = 1000;
+
 
     public Invoice(Reservation reservation){
         this.invoiceId = "I-" + (++idCounter);
         this.reservation = reservation;
-        this.amountPaid = 0.0;
         this.paymentCompleted = false;
         this.totalAmount = calculateTotal();
+
+        this.amountPaid = reservation.getDepositPaid();
+        if(this.amountPaid >= this.totalAmount){
+            this.paymentCompleted = true;
+        }
     }
 
 
@@ -28,21 +35,20 @@ public class Invoice implements Billable, Exportable{
 
         double tempTotal = basePrice + servicePrice;
 
-        double discountPercent = 0.0;
-        switch (reservation.getGuest().getMembershipLevel()){
-            case SILVER -> discountPercent = 0.05;
-            case GOLD -> discountPercent = 0.10;
-            case PLATINUM -> discountPercent = 0.15;
-            default -> discountPercent = 0.0;
-        }
+        double discountPercent = reservation.getGuest().getMembershipLevel().getDiscountRate();
+
 
         double discountAmount = tempTotal * discountPercent;
         double priceWithDiscount = tempTotal - discountAmount;
 
-        double municipalCharges = priceWithDiscount * 0.05;
-        double valueAddedTax = priceWithDiscount * 0.09;
+        double municipalCharges = priceWithDiscount * municipalTaxRate;
+        double valueAddedTax = priceWithDiscount * vatRate;
 
         return priceWithDiscount + municipalCharges + valueAddedTax;
+    }
+
+    public void recalculate(){
+        this.totalAmount = calculateTotal();
     }
 
     @Override
@@ -76,32 +82,86 @@ public class Invoice implements Billable, Exportable{
 
     @Override
     public String exportToText() {
-        String template =
-                "=========================================\n" +
-                        "             GRAND PERSIA HOTEL          \n" +
-                        "               FINAL INVOICE             \n" +
-                        "=========================================\n" +
-                        "Invoice ID:      %s\n" +
-                        "Guest Name:      %s\n" +
-                        "Membership:      %s\n" +
-                        "Room Number:     %s\n" +
-                        "-----------------------------------------\n" +
-                        "Total Amount:    %.2f\n" +
-                        "Amount Paid:     %.2f\n" +
-                        "Payment Status:  %s\n" +
-                        "=========================================\n";
+        double baseStayCost = reservation.getTotalPrice();
 
-        return String.format(template,
+        double servicesCost = 0;
+        if(reservation.getServices() != null){
+            for(Service service : reservation.getServices()){
+                servicesCost += service.getPrice();
+            }
+        }
+
+        double subtotal = baseStayCost + servicesCost;
+        double discountRate = reservation.getGuest().getMembershipLevel().getDiscountRate();
+        double discountAmount = subtotal * discountRate;
+        double afterDiscount = subtotal - discountAmount;
+        double municipalAmount = afterDiscount * municipalTaxRate;
+        double vatAmount = afterDiscount * vatRate;
+
+        long nights = reservation.getCheckOutDate().toEpochDay() - reservation.getCheckInDate().toEpochDay();
+
+        return String.format(
+                "================================================================\n" +
+                        "                   GRAND PERSIA HOTEL                          \n" +
+                        "                      FINAL INVOICE                            \n" +
+                        "================================================================\n" +
+                        "Invoice ID    : %s\n" +
+                        "Guest Name    : %s\n" +
+                        "Membership    : %s\n" +
+                        "Room          : %s (%s)\n" +
+                        "Check-In      : %s\n" +
+                        "Check-Out     : %s\n" +
+                        "Nights        : %d\n" +
+                        "----------------------------------------------------------------\n" +
+                        "ITEMIZED CHARGES\n" +
+                        "----------------------------------------------------------------\n" +
+                        "Stay Cost     : $%,12.2f\n" +
+                        "Services      : $%,12.2f\n" +
+                        "Subtotal      : $%,12.2f\n" +
+                        "Discount (%s) : -$%,11.2f\n" +
+                        "After Discount: $%,12.2f\n" +
+                        "----------------------------------------------------------------\n" +
+                        "Municipal Tax : $%,12.2f  (%.0f%%)\n" +
+                        "VAT           : $%,12.2f  (%.0f%%)\n" +
+                        "----------------------------------------------------------------\n" +
+                        "TOTAL AMOUNT  : $%,12.2f\n" +
+                        "Amount Paid   : $%,12.2f\n" +
+                        "Balance Due   : $%,12.2f\n" +
+                        "Status        : %s\n" +
+                        "================================================================\n",
                 invoiceId,
                 reservation.getGuest().getFullName(),
-                reservation.getGuest().getMembershipLevel().toString(),
+                reservation.getGuest().getMembershipLevel(),
                 reservation.getRoom().getRoomNumber(),
+                reservation.getRoom().getType(),
+                reservation.getCheckInDate(),
+                reservation.getCheckOutDate(),
+                nights,
+                baseStayCost,
+                servicesCost,
+                subtotal,
+                String.format("%.0f%%", discountRate * 100),
+                discountAmount,
+                afterDiscount,
+                municipalAmount, municipalTaxRate * 100,
+                vatAmount, vatRate * 100,
                 totalAmount,
                 amountPaid,
+                Math.max(0, totalAmount - amountPaid),
                 paymentCompleted ? "PAID IN FULL" : "PAYMENT PENDING"
         );
     }
 
+    public static void setTaxRates(double municipalRate, double vatRate){
+        if(municipalRate < 0 || vatRate < 0){
+            throw new IllegalArgumentException("Tax rates cannot be negative!");
+        }
+        Invoice.municipalTaxRate = municipalRate;
+        Invoice.vatRate = vatRate;
+    }
+
+    public static double getMunicipalTaxRate(){ return municipalTaxRate; }
+    public static double getVatRate(){ return vatRate; }
     public double getTotalAmount(){
         return totalAmount;
     }

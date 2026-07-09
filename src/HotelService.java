@@ -9,29 +9,45 @@ public class HotelService implements Searchable<Room>{
     public static final List<Reservation> Reservations = new ArrayList<>();
 
     public static final WaitlistManager waitlistManager = new WaitlistManager();
+    public static final List<MaintenanceRequest> MaintenanceRequests = new ArrayList<>();
 
     static {
         try {
             SuperAdmin defaultAdmin = new SuperAdmin(
-                    "Default",
+                    "Super Admin",
                     "1111111111",
                     "09000000000",
                     "admin",
-                    "GoodLuckCrackingThisOne",
-                    "IDK123",
+                    "admin123",
+                    "ADMIN001",
                     LocalDate.of(1970, 1, 1)
             );
             Users.add(defaultAdmin);
+            waitlistManager.registerObserver(waitlistManager);
         }
         catch (Exception e){
-            System.out.println("[SYSTEM]: SOMETHING WENT WRONG WHILE CREATOMG THE DEFAULT USER: " + e.getMessage());
+            System.out.println("[SYSTEM ERROR]: Default admin creation failed:" + e.getMessage());
         }
 
-        Rooms.add(new StandardRoom("101", RoomStatus.AVAILABLE, 250, 1, 2));
-        Rooms.add(new StandardRoom("102", RoomStatus.AVAILABLE, 250, 1, 2));
-        Rooms.add(new DeluxeRoom("201", RoomStatus.AVAILABLE, 325, 2, 3));
-        Rooms.add(new Suite("301", RoomStatus.AVAILABLE, 375, 3, 4));
-        Rooms.add(new PentHouse("501", RoomStatus.MAINTENANCE, 450, 5, 6));
+
+        //(floor = 5 && roomNum = 5) -> I'm going back to 505...If it's a seven hour flight or a forty-five minute drive...
+        for (int floor = 1; floor <= 5; floor++){
+            for (int roomNum = 1; roomNum <= 10; roomNum++){
+                String fullRoomNumber = floor + String.format("%02d", roomNum);
+                if (floor == 5){
+                    Rooms.add(new PentHouse(fullRoomNumber, RoomStatus.AVAILABLE, 800, floor, 6));
+                }
+                else if (floor == 4 || floor == 3){
+                    Rooms.add(new Suite(fullRoomNumber, RoomStatus.AVAILABLE, 400, floor, 4));
+                }
+                else if (floor == 2){
+                    Rooms.add(new DeluxeRoom(fullRoomNumber, RoomStatus.AVAILABLE, 200, floor, 3));
+                }
+                else{
+                    Rooms.add(new StandardRoom(fullRoomNumber, RoomStatus.AVAILABLE, 100, floor, 2));
+                }
+            }
+        }
     }
 
     public static User login(String username, String password){

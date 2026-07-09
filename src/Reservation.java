@@ -12,11 +12,31 @@ public class Reservation {
     private ReservationStatus status;
     private LocalDateTime createdAt;
     private double totalPrice;
+    private double depositPaid = 0.0;
     private List<Service> services;
     private int numberOfGuests;
+    private Invoice invoice;
 
-    public Reservation(String reservationId, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuests) throws InvalidDateRangeException {
+
+    public Reservation(String reservationId, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuests) throws InvalidDateRangeException, ReservationConflictException {
         validateDates(checkInDate, checkOutDate);
+        for (Reservation existing : HotelService.Reservations){
+            if (existing.getRoom().getRoomNumber().equals(room.getRoomNumber()) &&
+                    existing.getStatus() != ReservationStatus.CANCELLED &&
+                    existing.getStatus() != ReservationStatus.COMPLETED){
+
+                boolean overlaps = checkInDate.isBefore(existing.getCheckOutDate()) &&
+                        checkOutDate.isAfter(existing.getCheckInDate());
+                if (overlaps){
+                    throw new ReservationConflictException(
+                            "Room " + room.getRoomNumber() + " already has a reservation from " +
+                                    existing.getCheckInDate() + " to " + existing.getCheckOutDate() +
+                                    " (ID: " + existing.getReservationId() + ")"
+                    );
+                }
+            }
+        }
+
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
 
@@ -93,6 +113,10 @@ public class Reservation {
         return this.totalPrice;
     }
 
+    public double getDepositPaid(){
+        return depositPaid;
+    }
+
     public LocalDateTime getCreatedAt(){
         return this.createdAt;
     }
@@ -101,11 +125,18 @@ public class Reservation {
         return this.services;
     }
 
+    public Invoice getInvoice(){
+        return this.invoice;
+    }
+
     public void addService(Service service){
         if(this.services == null){
             this.services = new ArrayList<>();
         }
         this.services.add(service);
+        if(this.invoice != null){
+            this.invoice.recalculate();
+        }
     }
 
     private void validateDates(LocalDate checkInDate, LocalDate checkOutDate) throws InvalidDateRangeException {
@@ -114,9 +145,10 @@ public class Reservation {
         }
     }
 
-    public void confirmReservation(){
+    public void confirmReservation(double depositAmount){
         if(this.status == ReservationStatus.PENDING){
             this.status = ReservationStatus.CONFIRMED;
+            this.depositPaid = depositAmount;
         }
     }
 
@@ -124,6 +156,7 @@ public class Reservation {
         if(this.status == ReservationStatus.CONFIRMED){
             this.room.setStatus(RoomStatus.OCCUPIED);
             this.status = ReservationStatus.ACTIVE;
+            this.invoice = new Invoice(this);
         }
     }
 
@@ -145,13 +178,15 @@ public class Reservation {
 
     public double calculatePenalty(){
         long daysTillCheckIn = checkInDate.toEpochDay() - LocalDate.now().toEpochDay();
-        double pricePerNight = room.calculatePrice(checkInDate, numberOfGuests);
 
-        if(daysTillCheckIn < 1){
-            return 1.0 * pricePerNight;
+        double taxRate = 1 + Invoice.getMunicipalTaxRate() + Invoice.getVatRate();
+        double totalWithTax = this.totalPrice * taxRate;
+
+        if (daysTillCheckIn < 1){
+            return totalWithTax;
         }
-        else if(daysTillCheckIn <= 3){
-            return 0.5 * pricePerNight;
+        else if (daysTillCheckIn <= 3){
+            return totalWithTax * 0.5;
         }
         else{
             return 0.0;

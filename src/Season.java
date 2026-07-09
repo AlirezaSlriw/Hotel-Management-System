@@ -3,7 +3,7 @@ public enum Season {
     NORMAL(1.2),
     PEAK(1.5);
 
-    private final double multiplier;
+    private double multiplier;
 
     Season(double multiplier){
         this.multiplier = multiplier;
@@ -11,5 +11,12 @@ public enum Season {
 
     public double getMultiplier(){
         return this.multiplier;
+    }
+
+    public void setMultiplier(double multiplier){
+        if(multiplier <= 0){
+            throw new IllegalArgumentException("Multiplier must be greater than zero!");
+        }
+        this.multiplier = multiplier;
     }
 }

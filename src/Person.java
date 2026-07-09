@@ -25,8 +25,8 @@ public abstract class Person {
     }
 
     private void setNationalId(String nationalId){
-        if(nationalId == null || nationalId.length() != 10){
-            throw new IllegalArgumentException("National ID must be exactly 10 digits!");
+        if(nationalId == null || !nationalId.matches("\\d{10}")){
+            throw new IllegalArgumentException("National ID must be exactly 10 numeric digits!");
         }
         this.nationalId = nationalId;
     }

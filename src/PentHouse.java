@@ -1,4 +1,5 @@
 public class PentHouse extends Room{
+    private static double typeMultiplier = 5.0;
 
     public PentHouse(String roomNumber, RoomStatus status, double basePrice, int floorNumber, int capacity){
         super(roomNumber, RoomType.PENTHOUSE, status, basePrice, floorNumber, capacity);
@@ -6,6 +7,17 @@ public class PentHouse extends Room{
 
     @Override
     protected double getTypeMultiplier() {
-        return 5.0;
+        return typeMultiplier;
+    }
+
+    public static void setTypeMultiplier(double multiplier){
+        if(multiplier <= 0){
+            throw new IllegalArgumentException("Multiplier must be greater than zero!");
+        }
+        typeMultiplier = multiplier;
+    }
+
+    public static double getStaticTypeMultiplier(){
+        return typeMultiplier;
     }
 }
