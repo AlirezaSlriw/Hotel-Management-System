@@ -1,3 +1,6 @@
+package hms.model.room;
+import hms.enums.RoomStatus;
+import hms.enums.RoomType;
 import java.io.Serializable;
 
 public class StandardRoom extends Room implements Serializable {

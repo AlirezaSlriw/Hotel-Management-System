@@ -1,4 +1,7 @@
 package hms.model.person;
+import hms.enums.MembershipLevel;
+import hms.enums.UserRole;
+import hms.model.reservation.Reservation;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

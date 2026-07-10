@@ -1,5 +1,6 @@
 package hms.model.person;
 import java.io.Serializable;
+import hms.enums.UserRole;
 
 public abstract class User extends Person implements Serializable {
     private String username;

@@ -1,3 +1,9 @@
+package hms.model.reservation;
+import hms.enums.ReservationStatus;
+import hms.enums.RoomStatus;
+import hms.model.person.Guest;
+import hms.model.room.Room;
+import hms.exceptions.InvalidDateRangeException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,24 +25,8 @@ public class Reservation implements Serializable {
     private Invoice invoice;
 
 
-    public Reservation(String reservationId, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuests) throws InvalidDateRangeException, ReservationConflictException {
+    public Reservation(String reservationId, Guest guest, Room room, LocalDate checkInDate, LocalDate checkOutDate, int numberOfGuests) throws InvalidDateRangeException{
         validateDates(checkInDate, checkOutDate);
-        for (Reservation existing : HotelService.Reservations){
-            if (existing.getRoom().getRoomNumber().equals(room.getRoomNumber()) &&
-                    existing.getStatus() != ReservationStatus.CANCELLED &&
-                    existing.getStatus() != ReservationStatus.COMPLETED){
-
-                boolean overlaps = checkInDate.isBefore(existing.getCheckOutDate()) &&
-                        checkOutDate.isAfter(existing.getCheckInDate());
-                if (overlaps){
-                    throw new ReservationConflictException(
-                            "Room " + room.getRoomNumber() + " already has a reservation from " +
-                                    existing.getCheckInDate() + " to " + existing.getCheckOutDate() +
-                                    " (ID: " + existing.getReservationId() + ")"
-                    );
-                }
-            }
-        }
 
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;

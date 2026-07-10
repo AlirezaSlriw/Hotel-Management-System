@@ -1,3 +1,7 @@
+package hms.model.room;
+import hms.enums.RoomStatus;
+import hms.enums.RoomType;
+import hms.enums.Season;
 import java.io.Serializable;
 import java.time.LocalDate;
 

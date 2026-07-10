@@ -1,3 +1,8 @@
+package hms.service;
+import hms.interfaces.Notifiable;
+import hms.interfaces.RoomObserver;
+import hms.model.person.Guest;
+import hms.model.room.Room;
 import java.util.*;
 
 public class WaitlistManager implements RoomObserver, Notifiable {

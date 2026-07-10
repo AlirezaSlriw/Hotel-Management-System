@@ -1,3 +1,5 @@
+package hms.enums;
+
 public enum UserRole {
     GUEST,
     RECEPTIONIST,

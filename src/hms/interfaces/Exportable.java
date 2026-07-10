@@ -1,4 +1,4 @@
-package hms.enums;
+package hms.interfaces;
 
 public interface Exportable {
     String exportToText();

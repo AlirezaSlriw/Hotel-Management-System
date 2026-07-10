@@ -1,3 +1,13 @@
+package hms.service;
+import hms.enums.ReservationStatus;
+import hms.enums.RoomStatus;
+import hms.exceptions.ReservationConflictException;
+import hms.interfaces.Searchable;
+import hms.model.maintenance.MaintenanceRequest;
+import hms.model.person.SuperAdmin;
+import hms.model.person.User;
+import hms.model.reservation.Reservation;
+import hms.model.room.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,5 +94,25 @@ public class HotelService implements Searchable<Room>{
         return filteredRooms;
     }
 
+    public static void checkForConflict(Room room, LocalDate checkIn, LocalDate checkOut)
+            throws ReservationConflictException {
+        for (Reservation existing : Reservations){
+            if (existing.getRoom().getRoomNumber().equals(room.getRoomNumber()) &&
+                    existing.getStatus() != ReservationStatus.CANCELLED &&
+                    existing.getStatus() != ReservationStatus.COMPLETED){
 
+                boolean overlaps = checkIn.isBefore(existing.getCheckOutDate()) &&
+                        checkOut.isAfter(existing.getCheckInDate());
+                if (overlaps){
+                    throw new ReservationConflictException(
+                            "Room " + room.getRoomNumber() +
+                                    " already has a reservation from " +
+                                    existing.getCheckInDate() + " to " +
+                                    existing.getCheckOutDate() +
+                                    " (ID: " + existing.getReservationId() + ")"
+                    );
+                }
+            }
+        }
+    }
 }

@@ -1,3 +1,7 @@
+package hms.model.reservation;
+import hms.interfaces.Billable;
+import hms.interfaces.Exportable;
+import hms.exceptions.InsufficientPaymentException;
 import java.io.Serializable;
 
 public class Invoice implements Billable, Exportable, Serializable {

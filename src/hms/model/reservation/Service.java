@@ -1,3 +1,5 @@
+package hms.model.reservation;
+import hms.enums.ServiceType;
 import java.io.Serializable;
 
 public class Service implements Serializable {

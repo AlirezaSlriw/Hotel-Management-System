@@ -1,9 +1,28 @@
 package hms;
+import hms.data.SaveData;
+import hms.enums.*;
+import hms.exceptions.*;
+import hms.model.maintenance.MaintenanceRequest;
+import hms.model.maintenance.MaintenanceStatus;
+import hms.model.person.*;
+import hms.model.reservation.Invoice;
+import hms.model.reservation.Reservation;
+import hms.model.reservation.Service;
+import hms.model.room.*;
+import hms.service.HotelService;
+import hms.service.LoggerSystem;
+
+
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.time.LocalDate;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.File;
 
 public class Main {
     private static final String LINE      = "----------------------------------------";
@@ -133,6 +152,7 @@ public class Main {
         }
         else{
             System.out.println("[ERROR] Invalid username or password.");
+            LoggerSystem.log("ACCESS_DENIED", username, "Failed login attempt.");
         }
     }
 
@@ -534,7 +554,6 @@ public class Main {
     }
 
     private static void showReportsMenu(){
-        boolean isGuest = (currentUser.getRole() == UserRole.GUEST);
         boolean isReceptionist = (currentUser.getRole() == UserRole.RECEPTIONIST);
         boolean isManager = (currentUser.getRole() == UserRole.HOTEL_MANAGER);
         boolean isSuperAdmin = (currentUser.getRole() == UserRole.SUPER_ADMIN);
@@ -1297,6 +1316,16 @@ public class Main {
             System.out.print("Number of Guests > "); int guestsCount = Integer.parseInt(sc.nextLine());
 
             String resId = "R-" + (HotelService.Reservations.size() + 1001);
+
+            try {
+                HotelService.checkForConflict(targetRoom, checkIn, checkOut);
+            }
+            catch (ReservationConflictException e){
+                System.out.println("[ERROR] Date conflict: " + e.getMessage());
+                LoggerSystem.log("CONFLICT_ERROR", currentUser.getUsername(), e.getMessage());
+                return;
+            }
+
             Reservation reservation = new Reservation(resId, guest, targetRoom, checkIn, checkOut, guestsCount);
 
             HotelService.Reservations.add(reservation);
@@ -1328,10 +1357,6 @@ public class Main {
             System.out.println("[SUCCESS] Reservation ID: " + resId);
             LoggerSystem.log("RESERVATION_NEW", currentUser.getUsername(), "Created reservation " + resId + " | Status: " + reservation.getStatus());
 
-        }
-        catch (ReservationConflictException e){
-            System.out.println("[ERROR] Date conflict: " + e.getMessage());
-            LoggerSystem.log("CONFLICT_ERROR", currentUser.getUsername(), e.getMessage());
         }
         catch (DateTimeParseException e){
             System.out.println("[ERROR] Invalid date format. Use YYYY-MM-DD.");
@@ -1584,13 +1609,6 @@ public class Main {
         }
     }
 
-    private static void showAllRooms(){
-        printHeaderWide("ALL HOTEL ROOMS");
-        for (Room room : HotelService.Rooms){
-            System.out.printf("Room %-4s | %-10s | %-15s | $%.2f\n", room.getRoomNumber(), room.getType(), room.getStatus(), room.getBasePrice());
-        }
-    }
-
     private static void showAvailableRoomsOnly(){
         printHeaderWide("AVAILABLE ROOMS");
         for (Room room : HotelService.Rooms){
@@ -1608,8 +1626,8 @@ public class Main {
     }
 
     private static void saveData(){
-        try (java.io.ObjectOutputStream oos = new java.io.ObjectOutputStream(
-                new java.io.FileOutputStream(SAVE_FILE))){
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream(SAVE_FILE))){
 
             SaveData data = new SaveData();
 
@@ -1654,13 +1672,13 @@ public class Main {
     }
 
     private static void loadData(){
-        java.io.File file = new java.io.File(SAVE_FILE);
+        File file = new File(SAVE_FILE);
         if (!file.exists()){
             System.out.println("[SYSTEM] No previous save found. Starting fresh.");
             return;
         }
-        try (java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
-                new java.io.FileInputStream(SAVE_FILE))){
+        try (ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream(SAVE_FILE))){
 
             SaveData data = (SaveData) ois.readObject();
 

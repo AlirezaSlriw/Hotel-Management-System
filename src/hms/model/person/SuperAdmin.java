@@ -1,3 +1,5 @@
+package hms.model.person;
+import hms.enums.UserRole;
 import java.io.Serializable;
 import java.time.LocalDate;
 
