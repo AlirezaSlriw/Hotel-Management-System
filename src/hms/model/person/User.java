@@ -1,4 +1,7 @@
-public abstract class User extends Person{
+package hms.model.person;
+import java.io.Serializable;
+
+public abstract class User extends Person implements Serializable {
     private String username;
     private String password;
     private UserRole role;

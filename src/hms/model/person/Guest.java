@@ -1,7 +1,9 @@
+package hms.model.person;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Guest extends User{
+public class Guest extends User implements Serializable {
     private MembershipLevel membershipLevel;
     private int totalStays;
     private List<Reservation> reservationHistory;

@@ -1,8 +1,10 @@
-public class PentHouse extends Room{
-    private static double typeMultiplier = 5.0;
+import java.io.Serializable;
 
-    public PentHouse(String roomNumber, RoomStatus status, double basePrice, int floorNumber, int capacity){
-        super(roomNumber, RoomType.PENTHOUSE, status, basePrice, floorNumber, capacity);
+public class StandardRoom extends Room implements Serializable {
+    private static double typeMultiplier = 1.0;
+
+    public StandardRoom(String roomNumber, RoomStatus status, double basePrice, int floorNumber, int capacity){
+        super(roomNumber, RoomType.STANDARD, status, basePrice, floorNumber, capacity);
     }
 
     @Override

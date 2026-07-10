@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class HotelManager extends Staff{
+public class HotelManager extends Staff implements Serializable {
     private String departmentName;
 
     public HotelManager(String fullName, String nationalId, String phone, String username, String password, String employeeId, LocalDate hireDate, String departmentName){

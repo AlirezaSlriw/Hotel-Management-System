@@ -1,4 +1,6 @@
-public class Service {
+import java.io.Serializable;
+
+public class Service implements Serializable {
     private double price;
     private ServiceType type;
     private String serviceId;

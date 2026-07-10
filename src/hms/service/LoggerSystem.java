@@ -16,4 +16,9 @@ public class LoggerSystem {
     public static List<String> getLogs(){
         return systemLogs;
     }
+
+    public static void loadLogs(List<String> savedLogs){
+        systemLogs.clear();
+        systemLogs.addAll(savedLogs);
+    }
 }

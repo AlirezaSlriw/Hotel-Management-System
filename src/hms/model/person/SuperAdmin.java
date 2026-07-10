@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class SuperAdmin extends Staff {
+public class SuperAdmin extends Staff implements Serializable {
     private final boolean systemConfigAccess = true;
 
     public SuperAdmin(String fullName, String nationalId, String phone, String username,

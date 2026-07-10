@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class MaintenanceRequest {
+public class MaintenanceRequest implements Serializable {
     private static int idCounter = 1;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -38,6 +39,8 @@ public class MaintenanceRequest {
     public String getRequestedBy(){ return requestedBy; }
     public String getDescription(){ return description; }
     public MaintenanceStatus getStatus(){ return status; }
+    public static int getIdCounter(){ return idCounter; }
+    public static void setIdCounter(int counter){ idCounter = counter; }
 
     public String getSummary(){
         String resolved = (resolvedAt != null) ? resolvedAt.format(formatter) : "Pending";

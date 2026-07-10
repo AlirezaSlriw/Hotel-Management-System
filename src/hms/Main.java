@@ -1,3 +1,4 @@
+package hms;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ public class Main {
     private static final String LINE_WIDE = "----------------------------------------------------------------";
     private static final Scanner sc = new Scanner(System.in);
     private static User currentUser = null;
+    private static final String SAVE_FILE = "hotel_data.ser";
 
     private static void printHeader(String title){
         int width = LINE.length();
@@ -41,17 +43,21 @@ public class Main {
 
 
     public static void main(String[] args) {
+        loadData();
         showLoadingBar();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {saveData();}));
+
         while (true){
             if (currentUser == null){
                 showWelcomeMenu();
             }
             else{
                 switch (currentUser.getRole()){
-                    case SUPER_ADMIN -> showSuperAdminMenu();
+                    case SUPER_ADMIN   -> showSuperAdminMenu();
                     case HOTEL_MANAGER -> showHotelManagerMenu();
-                    case RECEPTIONIST -> showReceptionistMenu();
-                    case GUEST -> showGuestMenu();
+                    case RECEPTIONIST  -> showReceptionistMenu();
+                    case GUEST         -> showGuestMenu();
                 }
             }
         }
@@ -103,6 +109,7 @@ public class Main {
             case "1" -> showLoginMenu();
             case "2" -> registerGuestDirectly();
             case "3" -> {
+                saveData();
                 System.out.println("Thank you for using Grand Persia Hotel System. Goodbye!");
                 System.exit(0);
             }
@@ -1598,6 +1605,116 @@ public class Main {
         List<String> logs = LoggerSystem.getLogs();
         if(logs.isEmpty()) System.out.println("[INFO] No system log records yet.");
         else logs.forEach(System.out::println);
+    }
+
+    private static void saveData(){
+        try (java.io.ObjectOutputStream oos = new java.io.ObjectOutputStream(
+                new java.io.FileOutputStream(SAVE_FILE))){
+
+            SaveData data = new SaveData();
+
+            data.users = new java.util.ArrayList<>(HotelService.Users);
+            data.rooms = new java.util.ArrayList<>(HotelService.Rooms);
+            data.reservations = new java.util.ArrayList<>(HotelService.Reservations);
+            data.maintenanceRequests = new java.util.ArrayList<>(HotelService.MaintenanceRequests);
+            data.waitlists = HotelService.waitlistManager.getWaitlists();
+
+            data.invoiceIdCounter = Invoice.getIdCounter();
+            data.maintenanceIdCounter = MaintenanceRequest.getIdCounter();
+
+            data.seasonOff = Season.OFF.getMultiplier();
+            data.seasonNormal = Season.NORMAL.getMultiplier();
+            data.seasonPeak = Season.PEAK.getMultiplier();
+
+            data.memberBronzeDiscount = MembershipLevel.BRONZE.getDiscountRate();
+            data.memberSilverDiscount = MembershipLevel.SILVER.getDiscountRate();
+            data.memberGoldDiscount = MembershipLevel.GOLD.getDiscountRate();
+            data.memberPlatinumDiscount = MembershipLevel.PLATINUM.getDiscountRate();
+
+            data.standardMultiplier = StandardRoom.getStaticTypeMultiplier();
+            data.deluxeMultiplier = DeluxeRoom.getStaticTypeMultiplier();
+            data.suiteMultiplier = Suite.getStaticTypeMultiplier();
+            data.pentHouseMultiplier = PentHouse.getStaticTypeMultiplier();
+
+            data.singleGuestMultiplier = Room.getSingleGuestMultiplier();
+            data.doubleGuestMultiplier = Room.getDoubleGuestMultiplier();
+            data.extraGuestMultiplier = Room.getExtraGuestMultiplier();
+
+            data.municipalTaxRate = Invoice.getMunicipalTaxRate();
+            data.vatRate = Invoice.getVatRate();
+
+            data.logs= new java.util.ArrayList<>(LoggerSystem.getLogs());
+
+            oos.writeObject(data);
+            System.out.println("\n[SYSTEM] Data saved successfully.");
+        }
+        catch (Exception e){
+            System.out.println("[SYSTEM ERROR] Save failed: " + e.getMessage());
+        }
+    }
+
+    private static void loadData(){
+        java.io.File file = new java.io.File(SAVE_FILE);
+        if (!file.exists()){
+            System.out.println("[SYSTEM] No previous save found. Starting fresh.");
+            return;
+        }
+        try (java.io.ObjectInputStream ois = new java.io.ObjectInputStream(
+                new java.io.FileInputStream(SAVE_FILE))){
+
+            SaveData data = (SaveData) ois.readObject();
+
+            HotelService.Users.clear();
+            HotelService.Users.addAll(data.users);
+
+            HotelService.Rooms.clear();
+            HotelService.Rooms.addAll(data.rooms);
+
+            HotelService.Reservations.clear();
+            HotelService.Reservations.addAll(data.reservations);
+
+            HotelService.MaintenanceRequests.clear();
+            HotelService.MaintenanceRequests.addAll(data.maintenanceRequests);
+
+            if (data.waitlists != null){
+                HotelService.waitlistManager.loadWaitlists(data.waitlists);
+            }
+            HotelService.waitlistManager.initObservers();
+
+            Invoice.setIdCounter(data.invoiceIdCounter);
+            MaintenanceRequest.setIdCounter(data.maintenanceIdCounter);
+
+            Season.OFF.setMultiplier(data.seasonOff);
+            Season.NORMAL.setMultiplier(data.seasonNormal);
+            Season.PEAK.setMultiplier(data.seasonPeak);
+
+            MembershipLevel.BRONZE.setDiscountRate(data.memberBronzeDiscount);
+            MembershipLevel.SILVER.setDiscountRate(data.memberSilverDiscount);
+            MembershipLevel.GOLD.setDiscountRate(data.memberGoldDiscount);
+            MembershipLevel.PLATINUM.setDiscountRate(data.memberPlatinumDiscount);
+
+            StandardRoom.setTypeMultiplier(data.standardMultiplier);
+            DeluxeRoom.setTypeMultiplier(data.deluxeMultiplier);
+            Suite.setTypeMultiplier(data.suiteMultiplier);
+            PentHouse.setTypeMultiplier(data.pentHouseMultiplier);
+
+            Room.setGuestMultipliers(
+                    data.singleGuestMultiplier,
+                    data.doubleGuestMultiplier,
+                    data.extraGuestMultiplier
+            );
+
+            Invoice.setTaxRates(data.municipalTaxRate, data.vatRate);
+
+            if (data.logs != null){
+                LoggerSystem.loadLogs(data.logs);
+            }
+
+            System.out.println("[SYSTEM] Previous data loaded successfully.");
+        }
+        catch (Exception e){
+            System.out.println("[SYSTEM] Could not load save file. Starting fresh.");
+        }
     }
 
     private static void checkAccess(UserRole... allowedRoles) throws AccessDeniedException {

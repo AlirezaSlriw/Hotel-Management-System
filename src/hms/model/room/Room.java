@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Room {
+public abstract class Room implements Serializable {
 
     private String roomNumber;
     private RoomType type;
@@ -104,6 +105,10 @@ public abstract class Room {
         doubleGuestMultiplier = doubleGuest;
         extraGuestMultiplier = extra;
     }
+
+    public static double getSingleGuestMultiplier(){ return singleGuestMultiplier; }
+    public static double getDoubleGuestMultiplier(){ return doubleGuestMultiplier; }
+    public static double getExtraGuestMultiplier(){ return extraGuestMultiplier; }
 
     protected double getGuestMultiplier(int guestNumbers){
         if (guestNumbers <= 1) return singleGuestMultiplier;

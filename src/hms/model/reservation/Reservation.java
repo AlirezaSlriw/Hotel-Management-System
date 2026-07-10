@@ -1,9 +1,10 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reservation {
+public class Reservation implements Serializable {
     private String reservationId;
     private Guest guest;
     private Room room;

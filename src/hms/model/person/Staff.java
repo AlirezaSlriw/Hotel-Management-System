@@ -1,6 +1,8 @@
+package hms.model.person;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Staff extends User{
+public abstract class Staff extends User implements Serializable {
     private String employeeId;
     private LocalDate hireDate;
 

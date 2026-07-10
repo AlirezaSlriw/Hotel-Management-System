@@ -1,4 +1,7 @@
-public abstract class Person {
+package hms.model.person;
+import java.io.Serializable;
+
+public abstract class Person implements Serializable {
     private String fullName;
     private String nationalId;
     private String phone;

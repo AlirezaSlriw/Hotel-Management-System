@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Receptionist extends Staff{
+public class Receptionist extends Staff implements Serializable {
     private String shiftType;
 
     public Receptionist(String fullName, String nationalId, String phone, String username, String password, String employeeId, LocalDate hireDate, String shiftType){

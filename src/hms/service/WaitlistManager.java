@@ -2,7 +2,14 @@ import java.util.*;
 
 public class WaitlistManager implements RoomObserver, Notifiable {
     private final Map<String, Queue<Guest>> waitlists = new HashMap<>();
-    private final List<RoomObserver> observers = new ArrayList<>();
+    private transient List<RoomObserver> observers = new ArrayList<>();
+
+
+    private void readObject(java.io.ObjectInputStream in)
+            throws java.io.IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.observers = new ArrayList<>();
+    }
 
     @Override
     public void registerObserver(RoomObserver observer){
@@ -23,6 +30,13 @@ public class WaitlistManager implements RoomObserver, Notifiable {
         }
     }
 
+    public void initObservers(){
+        if (this.observers == null){
+            this.observers = new ArrayList<>();
+        }
+        this.registerObserver(this);
+    }
+
     public void addToList(String roomNum, Guest guest){
         waitlists.putIfAbsent(roomNum, new LinkedList<>());
         waitlists.get(roomNum).add(guest);
@@ -38,5 +52,14 @@ public class WaitlistManager implements RoomObserver, Notifiable {
             System.out.printf("[NOTIFICATION] Room %s is now available. Notifying: %s\n",
                     room.getRoomNumber(), nextGuest.getFullName());
         }
+    }
+
+    public Map<String, Queue<Guest>> getWaitlists(){
+        return waitlists;
+    }
+
+    public void loadWaitlists(Map<String, Queue<Guest>> saved){
+        this.waitlists.clear();
+        this.waitlists.putAll(saved);
     }
 }

@@ -1,4 +1,6 @@
-public class Invoice implements Billable, Exportable{
+import java.io.Serializable;
+
+public class Invoice implements Billable, Exportable, Serializable {
     private String invoiceId;
     private Reservation reservation;
     private double totalAmount;
@@ -171,4 +173,6 @@ public class Invoice implements Billable, Exportable{
     public boolean isPaymentCompleted(){
         return paymentCompleted;
     }
+    public static int getIdCounter(){ return idCounter; }
+    public static void setIdCounter(int counter){ idCounter = counter; }
 }

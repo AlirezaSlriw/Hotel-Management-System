@@ -1,4 +1,6 @@
-public class DeluxeRoom extends Room{
+import java.io.Serializable;
+
+public class DeluxeRoom extends Room implements Serializable {
     private static double typeMultiplier = 1.5;
 
     public DeluxeRoom(String roomNumber, RoomStatus status, double basePrice, int floorNumber, int capacity){

@@ -4,6 +4,21 @@ out/
 !**/src/test/**/out/
 .kotlin
 
+# Compiled output
+out/
+*.class
+
+# Save file
+*.ser
+hotel_data.ser
+
+# IDE files
+.idea/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
 
 .idea/
 *.iml
