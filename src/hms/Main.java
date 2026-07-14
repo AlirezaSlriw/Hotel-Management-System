@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.File;
+import java.io.IOException;
 
 public class Main {
     private static final String LINE      = "----------------------------------------";
@@ -65,7 +66,7 @@ public class Main {
         loadData();
         showLoadingBar();
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {saveData();}));
+        Runtime.getRuntime().addShutdownHook(new Thread(Main::saveData));
 
         while (true){
             if (currentUser == null){
@@ -83,8 +84,13 @@ public class Main {
     }
 
     private static void clearScreen(){
-        System.out.print("\033[H\033[2J\033[3J");
-        System.out.flush();
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        }
+        catch (IOException | InterruptedException e){
+            System.out.print("\033[H\033[2J\033[3J");
+            System.out.flush();
+        }
     }
 
     private static void showLoadingBar(){
