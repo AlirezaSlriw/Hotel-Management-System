@@ -93,6 +93,14 @@ public class Main {
         }
     }
 
+    private static void sleepAndClear(){
+        try {
+            Thread.sleep(1000);
+        }
+        catch (InterruptedException ignored){}
+        clearScreen();
+    }
+
     private static void showLoadingBar(){
         clearScreen();
         System.out.print("Loading: [");
@@ -124,7 +132,7 @@ public class Main {
         printHeader("GRAND PERSIA HOTEL");
         System.out.println("1. Login to Account");
         System.out.println("2. Guest Sign-Up (Create New Account)");
-        System.out.println("3. Exit System");
+        System.out.println("0. Exit System");
         System.out.println(LINE);
         System.out.print("Choice > ");
         String choice = sc.nextLine().trim();
@@ -133,7 +141,7 @@ public class Main {
         switch (choice){
             case "1" -> showLoginMenu();
             case "2" -> registerGuestDirectly();
-            case "3" -> {
+            case "0" -> {
                 saveData();
                 System.out.println("Thank you for using Grand Persia Hotel System. Goodbye!");
                 try {
@@ -211,7 +219,7 @@ public class Main {
             System.out.println("3. View Reports");
             System.out.println("4. Delete / Disable User Accounts");
             System.out.println("5. View System Audit Security Logs");
-            System.out.println("6. Logout");
+            System.out.println("0. Logout");
             System.out.println(LINE);
             System.out.print("Choice > ");
             String choice = sc.nextLine().trim();
@@ -235,20 +243,14 @@ public class Main {
                     showSecurityLogs();
                     waitForEnterWide();
                 }
-                case "6" -> {
+                case "0" -> {
                     LoggerSystem.log("LOGOUT", currentUser.getUsername(), "Logged out.");
                     currentUser = null;
                     inMenu = false;
                 }
                 default -> {
                     System.out.println("[ERROR] Invalid choice. Please try again.");
-                    try {
-                        Thread.sleep(1000);
-                    }
-                    catch(Exception ignored){
-
-                    }
-                    clearScreen();
+                    sleepAndClear();
                 }
             }
         }
@@ -303,14 +305,11 @@ public class Main {
                     r.setBasePrice(newPrice);
                     LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Base price of room " + roomNum + " -> " + newPrice);
                     System.out.print("[SUCCESS] Base price updated.");
-                    try {
-                        Thread.sleep(1000);
-                    }
-                    catch(Exception ignored){}
-                    clearScreen();
+                    sleepAndClear();
                 }
                 catch (NumberFormatException e){
                     System.out.println("[ERROR] Invalid number.");
+                    sleepAndClear();
                 }
                 catch (IllegalArgumentException e){
                     System.out.println("[ERROR] " + e.getMessage());
@@ -318,7 +317,8 @@ public class Main {
                 return;
             }
         }
-        System.out.println("[ERROR] Room not found.");
+        System.out.print("[ERROR] Room not found.");
+        sleepAndClear();
     }
 
     private static void changeRoomTypeMultipliers(){
@@ -342,21 +342,22 @@ public class Main {
                 case "2" -> DeluxeRoom.setTypeMultiplier(newValue);
                 case "3" -> Suite.setTypeMultiplier(newValue);
                 case "4" -> PentHouse.setTypeMultiplier(newValue);
-                default -> { System.out.println("[ERROR] Invalid selection."); return; }
+                default -> {
+                    System.out.println("[ERROR] Invalid selection.");
+                    sleepAndClear();
+                    return;
+                }
             }
             LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Room type multiplier changed to " + newValue);
             System.out.print("[SUCCESS] Multiplier updated.");
-            try {
-                Thread.sleep(1000);
-            }
-            catch(Exception ignored){}
-            clearScreen();
+            sleepAndClear();
         }
         catch (NumberFormatException e){
-            System.out.println("[ERROR] Invalid number.");
+            System.out.print("[ERROR] Invalid number.");
+            sleepAndClear();
         }
         catch (IllegalArgumentException e){
-            System.out.println("[ERROR] " + e.getMessage());
+            System.out.print("[ERROR] " + e.getMessage());
         }
     }
 
@@ -379,14 +380,10 @@ public class Main {
             season.setMultiplier(newValue);
             LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Season " + name + " multiplier -> " + newValue);
             System.out.print("[SUCCESS] Multiplier updated.");
-            try {
-                Thread.sleep(1000);
-            }
-            catch(Exception ignored){}
-            clearScreen();
+            sleepAndClear();
         }
         catch (IllegalArgumentException e){
-            System.out.println("[ERROR] " + e.getMessage());
+            System.out.print("[ERROR] " + e.getMessage());
         }
     }
 
@@ -403,17 +400,14 @@ public class Main {
             Room.setGuestMultipliers(single, doubleG, extra);
             LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Guest multipliers updated.");
             System.out.print("[SUCCESS] Guest multipliers updated.");
-            try {
-                Thread.sleep(1000);
-            }
-            catch(Exception ignored){}
-            clearScreen();
+            sleepAndClear();
         }
         catch (NumberFormatException e){
-            System.out.println("[ERROR] Invalid number.");
+            System.out.print("[ERROR] Invalid number.");
+            sleepAndClear();
         }
         catch (IllegalArgumentException e){
-            System.out.println("[ERROR] " + e.getMessage());
+            System.out.print("[ERROR] " + e.getMessage());
         }
     }
 
@@ -436,11 +430,7 @@ public class Main {
             level.setDiscountRate(percent / 100.0);
             LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Discount for " + name + " -> " + percent + "%");
             System.out.print("[SUCCESS] Discount updated.");
-            try {
-                Thread.sleep(1000);
-            }
-            catch(Exception ignored){}
-            clearScreen();
+            sleepAndClear();
         }
         catch (IllegalArgumentException e){
             System.out.println("[ERROR] " + e.getMessage());
@@ -460,14 +450,11 @@ public class Main {
             Invoice.setTaxRates(municipal / 100.0, vat / 100.0);
             LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Tax rates updated.");
             System.out.print("[SUCCESS] Tax rates updated.");
-            try {
-                Thread.sleep(1000);
-            }
-            catch(Exception ignored){}
-            clearScreen();
+            sleepAndClear();
         }
         catch (NumberFormatException e){
             System.out.println("[ERROR] Invalid number.");
+            sleepAndClear();
         }
         catch (IllegalArgumentException e){
             System.out.println("[ERROR] " + e.getMessage());
@@ -535,7 +522,7 @@ public class Main {
             System.out.println("3. View Reports");
             System.out.println("4. Change Room Status (e.g., MAINTENANCE)");
             System.out.println("5. Maintenance Request Approvals");
-            System.out.println("6. Logout");
+            System.out.println("0. Logout");
             System.out.println(LINE);
             System.out.print("Choice > ");
             String choice = sc.nextLine().trim();
@@ -580,7 +567,7 @@ public class Main {
                 case "5" -> {
                     manageMaintenanceRequests();
                 }
-                case "6" -> {
+                case "0" -> {
                     LoggerSystem.log("LOGOUT", currentUser.getUsername(), "Logged out.");
                     currentUser = null;
                     inMenu = false;
@@ -1021,7 +1008,7 @@ public class Main {
             System.out.println("6. Process Payment");
             System.out.println("7. Apply Manual Discount to Invoice");
             System.out.println("8. View Reports");
-            System.out.println("9. Logout");
+            System.out.println("0. Logout");
             System.out.println(LINE);
             System.out.print("Choice > ");
             String choice = sc.nextLine().trim();
@@ -1059,7 +1046,7 @@ public class Main {
                 case "8" -> {
                     showReportsMenu();
                 }
-                case "9" -> {
+                case "0" -> {
                     LoggerSystem.log("LOGOUT", currentUser.getUsername(), "Logged out.");
                     currentUser = null;
                     inMenu = false;
@@ -1122,7 +1109,7 @@ public class Main {
             System.out.println("4. View My Complete Stay History");
             System.out.println("5. Request a Service / Maintenance");
             System.out.println("6. View Room Status Overview");
-            System.out.println("7. Logout");
+            System.out.println("0. Logout");
             System.out.println(LINE);
             System.out.print("Choice > ");
             String choice = sc.nextLine().trim();
@@ -1184,7 +1171,7 @@ public class Main {
                     reportRoomStatusOverview();
                     waitForEnterWide();
                 }
-                case "7" -> {
+                case "0" -> {
                     LoggerSystem.log("LOGOUT", currentUser.getUsername(), "Logged out.");
                     currentUser = null;
                     inMenu = false;
