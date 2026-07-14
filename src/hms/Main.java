@@ -95,7 +95,7 @@ public class Main {
 
     private static void showLoadingBar(){
         clearScreen();
-        System.out.print("  Loading: [");
+        System.out.print("Loading: [");
         for (int i = 0; i < 30; i++){
             try { Thread.sleep(60); } catch (InterruptedException ignored) {}
             System.out.print("=");
@@ -136,6 +136,10 @@ public class Main {
             case "3" -> {
                 saveData();
                 System.out.println("Thank you for using Grand Persia Hotel System. Goodbye!");
+                try {
+                    Thread.sleep(1000);
+                }
+                catch(Exception ignored){}
                 System.exit(0);
             }
             default -> System.out.println("[ERROR] Invalid choice. Please try again.");
@@ -298,7 +302,12 @@ public class Main {
                     double newPrice = Double.parseDouble(sc.nextLine().trim());
                     r.setBasePrice(newPrice);
                     LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Base price of room " + roomNum + " -> " + newPrice);
-                    System.out.println("[SUCCESS] Base price updated.");
+                    System.out.print("[SUCCESS] Base price updated.");
+                    try {
+                        Thread.sleep(1000);
+                    }
+                    catch(Exception ignored){}
+                    clearScreen();
                 }
                 catch (NumberFormatException e){
                     System.out.println("[ERROR] Invalid number.");
@@ -336,7 +345,12 @@ public class Main {
                 default -> { System.out.println("[ERROR] Invalid selection."); return; }
             }
             LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Room type multiplier changed to " + newValue);
-            System.out.println("[SUCCESS] Multiplier updated.");
+            System.out.print("[SUCCESS] Multiplier updated.");
+            try {
+                Thread.sleep(1000);
+            }
+            catch(Exception ignored){}
+            clearScreen();
         }
         catch (NumberFormatException e){
             System.out.println("[ERROR] Invalid number.");
@@ -364,7 +378,12 @@ public class Main {
             double newValue = Double.parseDouble(sc.nextLine().trim());
             season.setMultiplier(newValue);
             LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Season " + name + " multiplier -> " + newValue);
-            System.out.println("[SUCCESS] Multiplier updated.");
+            System.out.print("[SUCCESS] Multiplier updated.");
+            try {
+                Thread.sleep(1000);
+            }
+            catch(Exception ignored){}
+            clearScreen();
         }
         catch (IllegalArgumentException e){
             System.out.println("[ERROR] " + e.getMessage());
@@ -383,7 +402,12 @@ public class Main {
 
             Room.setGuestMultipliers(single, doubleG, extra);
             LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Guest multipliers updated.");
-            System.out.println("[SUCCESS] Guest multipliers updated.");
+            System.out.print("[SUCCESS] Guest multipliers updated.");
+            try {
+                Thread.sleep(1000);
+            }
+            catch(Exception ignored){}
+            clearScreen();
         }
         catch (NumberFormatException e){
             System.out.println("[ERROR] Invalid number.");
@@ -411,7 +435,12 @@ public class Main {
             double percent = Double.parseDouble(sc.nextLine().trim());
             level.setDiscountRate(percent / 100.0);
             LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Discount for " + name + " -> " + percent + "%");
-            System.out.println("[SUCCESS] Discount updated.");
+            System.out.print("[SUCCESS] Discount updated.");
+            try {
+                Thread.sleep(1000);
+            }
+            catch(Exception ignored){}
+            clearScreen();
         }
         catch (IllegalArgumentException e){
             System.out.println("[ERROR] " + e.getMessage());
@@ -430,7 +459,12 @@ public class Main {
 
             Invoice.setTaxRates(municipal / 100.0, vat / 100.0);
             LoggerSystem.log("SETTINGS_CHANGE", currentUser.getUsername(), "Tax rates updated.");
-            System.out.println("[SUCCESS] Tax rates updated.");
+            System.out.print("[SUCCESS] Tax rates updated.");
+            try {
+                Thread.sleep(1000);
+            }
+            catch(Exception ignored){}
+            clearScreen();
         }
         catch (NumberFormatException e){
             System.out.println("[ERROR] Invalid number.");
